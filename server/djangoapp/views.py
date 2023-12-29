@@ -47,6 +47,7 @@ def login_request(request):
 def logout_request(request):
     print("Log out the user `{}`".format(request.user.username))
     logout(request)
+    messages.success(request, 'You have been successfully logged out.')
     return redirect('djangoapp:index')
 
 # ...
