@@ -55,7 +55,31 @@ def logout_request(request):
 
 # Create a `registration_request` view to handle sign up request
 def registration_request(request):
-    path('registration/', views.registration_request, name='registration')
+    context = {}
+    if request.method == 'GET':
+        return render(request, 'djangoapp/registration.html', context)
+    elif request.method == 'POST':
+        # Check if user exists
+        username = request.POST['username']
+        password = request.POST['psw']
+        first_name = request.POST['firstname']
+        last_name = request.POST['lastname']
+        user_exist = False
+        try:
+            existing_user = User.objects.get(username=username)
+            user_exist = True
+        except:
+            logger.error("New user")
+        if not user_exist:
+            user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name,
+                                            password=password)
+            login(request, user)
+            messages.success(request, "Registration successful. Welcome, {}!".format(user.first_name))
+            return redirect("djangoapp:index")
+        else:
+            context['message'] = "User already exists."
+            messages.error(request, "User '{}' already exists.".format(existing_user.username))
+            return render(request, 'djangoapp/registration.html', context)
 # ...
 
 # Update the `get_dealerships` view to render the index page with a list of dealerships
