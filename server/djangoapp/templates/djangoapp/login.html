@@ -1,4 +1,78 @@
-<form action="{% url 'djagnoapp:login' %}" method="post">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dealership Review</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link href="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
+
+</head>
+
+    <body>
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" href="#">NAVBAR</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="container-fluid">
+        <ul class="nav navbar-nav navbar-left">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <!--
+                    <a class="nav-link" href="{#% url 'members' %}">Members View</a>
+                -->
+                <a class="nav-link" href="/djangoapp/about">About us</a>
+            </li>
+            <li class="nav-item">   
+                <a class="nav-link" href="/djangoapp/contact">Contact</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Dropdown
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+            </li>
+        </ul>
+
+            {% if user.is_authenticated %}
+            <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
+                <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
+            </li>
+            </ul>
+            {% else %}
+            <ul class="nav navbar-nav navbar-right">
+            <li>
+                <form class="form-inline" action="{% url 'djangoapp:login' %}" method="post">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Username" name="username" >
+                        <input type="password" class="form-control" placeholder="Password" name="psw" >
+                        <button class="btn btn-primary" type="submit">Login</button>
+                        <a class="btn btn-link" href="{% url 'djangoapp:registration' %}">Sign Up</a>
+                    </div>
+                </form>
+            </li>
+            </ul>
+            {% endif %}  
+    </div>
+</nav>
+
+<form action="{% url 'djangoapp:login' %}" method="post">
     {% csrf_token %}
     <div class="container"> <!--Style root div with .container class -->
       <h1>Login</h1>
@@ -16,3 +90,7 @@
       <button class="btn btn-primary" type="submit">Login</button> <!--Style button with .btn and .btn-primary class -->
     </div>
   </form>
+
+</body>
+
+</html>

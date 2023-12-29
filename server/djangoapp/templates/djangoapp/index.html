@@ -23,8 +23,8 @@
             <span class="navbar-toggler-icon"></span>
         </button>
     
-        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-            <ul class="navbar-nav">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav navbar-left">
                 <li class="nav-item active">
                     <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                 </li>
@@ -33,6 +33,8 @@
                         <a class="nav-link" href="{#% url 'members' %}">Members View</a>
                     -->
                     <a class="nav-link" href="/djangoapp/about">About us</a>
+                </li>
+                <li class="nav-item">   
                     <a class="nav-link" href="/djangoapp/contact">Contact</a>
                 </li>
                 <li class="nav-item dropdown">
@@ -44,15 +46,18 @@
                       <li><a class="dropdown-item" href="#">Another action</a></li>
                       <li><a class="dropdown-item" href="#">Something else here</a></li>
                     </ul>
-                  </li>
-
+                </li>
+            </ul>
 
                 {% if user.is_authenticated %}
+                <ul class="nav navbar-nav navbar-right">
                 <li>
                     <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
                     <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
                 </li>
+                </ul>
                 {% else %}
+                <ul class="nav navbar-nav navbar-right">
                 <li>
                     <form class="form-inline" action="{% url 'djangoapp:login' %}" method="post">
                         {% csrf_token %}
@@ -64,9 +69,10 @@
                         </div>
                     </form>
                 </li>
+                </ul>
                 {% endif %}
                 
-             </ul>
+             
             
         </div>
     </nav>
